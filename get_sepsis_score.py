@@ -24,12 +24,10 @@ def get_sepsis_score(data, model):
     values = values.fillna(method='pad')  # 引入平均值，再填充
 
 
+    values.drop(values.columns[[7, 9, 10,14, 16, 18, 20, 22,  26, 27, 32]], axis=1, inplace=True)
 
-    values.drop(values.columns[[7, 13, 14, 16, 20, 26, 27, 32, 36, 37]], axis=1, inplace=True)
 
-    values = values[-1:]
-
-    x_test = values
+    x_test = values[-1:]
     prediction_probas = model.predict_proba(x_test)
     prediction_proba = prediction_probas[-1]
     labels = model.predict(x_test)
@@ -43,6 +41,6 @@ def get_sepsis_score(data, model):
 
 def load_sepsis_model():
 
-    model = joblib.load('clf_SGD2r15000.pkl')
+    model = joblib.load('clf_AdaBoost_36000.pkl')
 
     return model
